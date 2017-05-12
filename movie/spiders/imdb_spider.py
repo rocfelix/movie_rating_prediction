@@ -4,8 +4,8 @@ import scrapy
 import random
 import json
 import locale
-import urllib2
-from bs4 import BeautifulSoup
+import urllib.request
+from bs4 import BeautifulSoupf
 
 from movie.items import MovieItem
 
@@ -36,7 +36,8 @@ class ImdbSpider(scrapy.Spider):
         return response.xpath(path).extract()
 
     def get_facebook_likes(self, entity_type, entity_id):
-        # the 'entity_id' could be imdb movie id, or imdb people id
+        # the 'entity_id' co
+        d be imdb movie id, or imdb people id
         if entity_type == "person_name_id":
             url = "https://www.facebook.com/widgets/like.php?width=280&show_faces=1&layout=standard&href=http%3A%2F%2Fwww.imdb.com%2Fname%2F{}%2F&colorscheme=light".format(entity_id)
         elif entity_type == "movie_title_id":
@@ -45,7 +46,7 @@ class ImdbSpider(scrapy.Spider):
             url = None
         time.sleep(random.uniform(0, 0.25)) # randomly snooze a time within [0, 0.4] second
         try:
-            content = urllib2.urlopen(url).read()
+            content = urllib.request.urlopen(url).read()
             soup = BeautifulSoup(content, "lxml")
             sentence = soup.find_all(id="u_0_2")[0].span.string # get sentence like: "43K people like this"
             num_likes = sentence.split(" ")[0]
@@ -72,7 +73,7 @@ class ImdbSpider(scrapy.Spider):
         pass
 
     def parse(self, response):
-        print "*"*100
+        print ("*"*100)
         item = MovieItem()
         item['movie_imdb_link'] = response.url
 
