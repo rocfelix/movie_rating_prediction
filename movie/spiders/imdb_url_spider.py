@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import json
-import urllib2
+import urllib.request
 from scrapy.selector import Selector
 from movie.items import ImdbUrlItem
 
